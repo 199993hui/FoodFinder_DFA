@@ -43,11 +43,37 @@ def detect_food(input_string, dfa):
         current_state = next_state(dfa[0], current_state, char)
     
     if is_accept_state(dfa[2], current_state):
+            print(dfa[2])
             return True
     return False
 
+def transition(input_string, dfa):
+    current_state = dfa[1]
+    input_string = input_string.lower()
+    states = {}
+    for char in input_string:
+        previous_state = current_state
+        if previous_state != -1:
+            current_state = next_state(dfa[0], current_state, char)
+            if states.get(previous_state,'') == '':
+                states[previous_state] = {}
+                states[previous_state]["char"]= char
+                states[previous_state]["next_state"]= current_state
+            else:
+                states[previous_state]["char"]= char
+                states[previous_state]["next_state"]= current_state
+        else:
+            if states.get(previous_state,'') == '':
+                states[previous_state] = []
+                states[previous_state].append({'char':char,'next_state':previous_state})
+            else:
+                states[previous_state].append({'char':char,'next_state':previous_state})
+
+    
+    return states
+
 def token(text):
-    tokenizer = nltk.tokenize.MWETokenizer([("ice", "cream")], separator=' ')
+    tokenizer = nltk.tokenize.MWETokenizer([("ice", "cream"),("Ice", "cream"),("crème", "brûlée"),("banana","boat"),("black","forest")], separator=' ')
     tokens = tokenizer.tokenize(nltk.word_tokenize(text))
     return tokens
 
@@ -58,7 +84,7 @@ def find_food(tokens, food_dfa):
 
     # Iterate over all substrings of input_text and check if they are food names
     for word in tokens:
-        if detect_food(word, food_dfa):
+        if detect_food(word.lower(), food_dfa):
             if word.lower() not in detected_food_names:
                 detected_food_names[word.lower()] = 1
             else:
@@ -88,6 +114,6 @@ def position(tokens, detected_food_names, accept):
 
     reject = total_word-accept
     print('Accepted words: ' , accept)
-    print('Rejected words: ' , (reject))
+    print('Rejected words: ' , reject)
 
-    return position, accept, reject
+    return position, accept, reject, filtered_token
