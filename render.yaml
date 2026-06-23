@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: foodfinder-dfa
+    runtime: python
+    buildCommand: "pip install -r requirements.txt && python -c \"import nltk; nltk.download('punkt'); nltk.download('punkt_tab')\""
+    startCommand: "gunicorn frontend:app"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: FLASK_DEBUG
+        value: "false"
