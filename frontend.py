@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', os.urandom(24))
 
 FOODS = ['cake', 'ice cream', 'chocolate', 'pudding', 'cheesecake', 'black forest',
-         'tiramisu', 'pie', 'banana boat', 'crème brûlée', 'macaron', 'pancake',
+         'tiramisu', 'pie', 'banana boat', 'banana', 'crème brûlée', 'macaron', 'pancake',
          'tart', 'soufflé', 'charlotte', 'fruit', 'coffee']
 
 def build_food_dfa(text):
