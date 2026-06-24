@@ -1,6 +1,6 @@
 # Food Name Detector using DFA Algorithm
 
-🌐 **[Live Demo](https://food-name-detector.onrender.com)**
+🌐 **[Live Demo](https://foodfinder-dfa.onrender.com)**
 
 A web application that detects food names in free-form text using a **Deterministic Finite Automaton (DFA)** — a concept from the Theory of Computation. Built as a full-stack project with a Python/Flask backend and a dynamic frontend that visualises DFA state transitions in real time.
 
