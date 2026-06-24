@@ -49,7 +49,6 @@ def detect_food(input_string, dfa):
         current_state = next_state(dfa[0], current_state, char)
     
     if is_accept_state(dfa[2], current_state):
-            print(dfa[2])
             return True
     return False
 
