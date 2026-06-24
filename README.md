@@ -50,7 +50,7 @@ Multi-word expressions like `ice cream` and `black forest` are handled by NLTK's
 | Single Words | Multi-word Expressions |
 |---|---|
 | cake, cheesecake, chocolate, pudding | ice cream, black forest |
-| pie, tart, macaron, pancake | banana boat, crème brûlée |
+| pie, tart, macaron, pancake, banana | banana boat, crème brûlée |
 | tiramisu, soufflé, charlotte | |
 | banana, fruit, coffee | |
 
