@@ -34,108 +34,130 @@
       </div>
     </form>
 
-    <section>
+    <section class="gradient-custom">
       <div class="container py-5">
         <div class="row">
 
           <!-- Word count status -->
           <div class="col-md-6 col-lg-5 col-xl-5 mb-4 mb-md-0">
-            <div class="card">
-              <div class="card-header d-flex justify-content-between p-3">
+            <div class="card mask-custom">
+              <div class="card-header d-flex justify-content-between p-3"
+                style="border-bottom: 1px solid rgba(255, 255, 255, 0.3)">
                 <p class="fw-bold mb-0">Words</p>
               </div>
               <div class="card-body">
-                <p class="fw-bold mb-0">Status</p>
-                {% if result != 0 %}
-                <div class="col d-flex justify-content-between">
-                  <p>Accept:</p>
-                  <span class="small mb-1">{{ accept }}</span>
-                </div>
-                <div class="col d-flex justify-content-between">
-                  <p>Reject:</p>
-                  <span class="small mb-1">{{ reject }}</span>
-                </div>
-                <div class="col d-flex justify-content-between">
-                  <p>Total words:</p>
-                  <span class="small mb-1">{{ accept + reject }}</span>
-                </div>
-                {% endif %}
+                <ul class="list-unstyled mb-0">
+                  <li class="p-2 border-bottom"
+                    style="border-bottom: 1px solid rgba(230, 12, 12, 0) !important;">
+                    <p class="fw-bold mb-0">Status</p>
+                    {% if result != 0 %}
+                    <div class="col d-flex justify-content-between">
+                      <p>Accept:</p>
+                      <span class="small mb-1">{{ accept }}</span>
+                    </div>
+                    <div class="col d-flex justify-content-between">
+                      <p>Reject:</p>
+                      <span class="small mb-1">{{ reject }}</span>
+                    </div>
+                    <div class="col d-flex justify-content-between">
+                      <p>Total words:</p>
+                      <span class="small mb-1">{{ accept + reject }}</span>
+                    </div>
+                    {% endif %}
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
 
           <!-- Highlighted result -->
           <div class="col-md-6 col-lg-7 col-xl-7">
-            <div class="card w-100">
-              <div class="card-header d-flex justify-content-between p-3">
-                <p class="fw-bold mb-0">Result</p>
-              </div>
-              {% if result != 0 %}
-              <div class="card-body">
-                <p class="mb-0">{{ result|safe }}</p>
-              </div>
-              {% endif %}
-            </div>
+            <ul class="list-unstyled">
+              <li class="d-flex justify-content-between mb-4">
+                <div class="card mask-custom w-100">
+                  <div class="card-header d-flex justify-content-between p-3"
+                    style="border-bottom: 1px solid rgba(255, 255, 255, 0.3)">
+                    <p class="fw-bold mb-0">Result</p>
+                  </div>
+                  {% if result != 0 %}
+                  <div class="card-body">
+                    <p class="mb-0">{{ result|safe }}</p>
+                  </div>
+                  {% endif %}
+                </div>
+              </li>
+            </ul>
           </div>
 
         </div>
       </div>
     </section>
 
-    <section>
+    <section class="gradient-custom">
       <div class="container py-5">
         <div class="row">
 
           <!-- Found food names table -->
           <div class="col-md-6 col-lg-5 col-xl-5 mb-4 mb-md-0">
-            <div class="card">
-              <div class="card-header d-flex justify-content-between p-3">
+            <div class="card mask-custom">
+              <div class="card-header d-flex justify-content-between p-3"
+                style="border-bottom: 1px solid rgba(255, 255, 255, 0.3)">
                 <p class="fw-bold mb-0">Found Food Names</p>
               </div>
-              <div class="card-body p-2">
-                <table class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th>Food name</th>
-                      <th>Count</th>
-                      <th>Position</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for food_name, count in food_names.items() %}
-                    <tr>
-                      <td>{{ food_name }}</td>
-                      <td>{{ count }}</td>
-                      <td>{{ position[food_name] }}</td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-              </div>
+              <ul class="list-unstyled mb-0">
+                <li class="p-2 border-bottom"
+                  style="border-bottom: 1px solid rgba(230, 12, 12, 0) !important;">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Food name</th>
+                        <th>Count</th>
+                        <th>Position</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for food_name, count in food_names.items() %}
+                      <tr>
+                        <td>{{ food_name }}</td>
+                        <td>{{ count }}</td>
+                        <td>{{ position[food_name] }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </li>
+              </ul>
             </div>
           </div>
 
           <!-- State transition viewer -->
           <div class="col-md-6 col-lg-7 col-xl-7">
-            <div class="card w-100">
-              {% if token %}
-              <div class="mb-3 mx-auto col-md-8 pt-3">
-                <label for="wordSelect">State Transition</label>
-                <select class="form-control select mb-3" id="wordSelect">
-                  {% for word in token %}
-                  <option>{{ word }}</option>
-                  {% endfor %}
-                </select>
-                <button type="button" class="btn btn-primary ajax btn-block mb-4">
-                  Submit
-                </button>
-              </div>
-              {% endif %}
-              <div class="card-header d-flex justify-content-between p-3">
-                <p class="fw-bold mb-0">Transition Table</p>
-              </div>
-              <div class="container transition_table p-2"></div>
-            </div>
+            <ul class="list-unstyled">
+              <li class="d-flex justify-content-between mb-4">
+                <div class="card mask-custom w-100">
+                  {% if token %}
+                  <div class="mb-3 mx-auto col-md-8 pt-3">
+                    <div>
+                      <label for="wordSelect">State Transition</label>
+                      <select class="form-control select mb-3" id="wordSelect">
+                        {% for word in token %}
+                        <option>{{ word }}</option>
+                        {% endfor %}
+                      </select>
+                      <button type="button" class="btn btn-primary ajax btn-block mb-4">
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                  {% endif %}
+                  <div class="card-header d-flex justify-content-between p-3"
+                    style="border-bottom: 1px solid rgba(255, 255, 255, 0.3)">
+                    <p class="fw-bold mb-0">Transition Table</p>
+                  </div>
+                  <div class="container transition_table p-2"></div>
+                </div>
+              </li>
+            </ul>
           </div>
 
         </div>
