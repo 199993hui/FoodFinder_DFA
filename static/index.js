@@ -1,74 +1,93 @@
 $(document).ready(function () {
   $(".ajax").click(function () {
-    const word = $(".select").val().replace(/[<>"'&]/g, "");
     $.ajax({
-      url: "/transition",
+      url: "",
       type: "get",
-      data: { word: word },
+      data: { word: $(".select").val() },
+      contentType: "application/json",
       success: function (response) {
-        const json = response.states;
-        const accept = response.accept;
-
+        const json_response = JSON.parse(response);
+        const json = json_response.states
+        const accept = json_response.accept
+        console.log(accept)
+        console.log(json)
         if (json["-1"]) {
-          let trapState = json["-1"];
-          let nextStates = Object.entries(json).filter(([state]) => state !== "-1");
-          let trapRows = Object.entries(trapState).map(([_, val]) => ["-1", val]);
-          let allRows = [...nextStates, ...trapRows];
-
-          let rows = allRows.map(([state, successor]) => `
+          let trap_state = json["-1"];
+          let next_state = Object.entries(json).filter(
+            ([state]) => state !== "-1"
+          );
+          trap_state = Object.entries(trap_state).map(([state, _]) => [
+            "-1",
+            _,
+          ]);
+          let transition = [...next_state, ...trap_state];
+          console.log(transition);
+          let transition_state = transition.map(([state, successor]) => {
+            return `
             <tr>
-              <td>${state}</td>
-              <td>${successor.char}</td>
-              <td>${successor.next_state}</td>
-            </tr>`).join("");
-
-          $(".transition_table").html(`
+            <td>${state}</td>
+            <td>${successor.char}</td>
+            <td>${successor.next_state}</td>
+            </tr>
+            `;
+          });
+          let transition_table = `
             <table class="table table-hover">
-              <thead>
+            <thead>
                 <tr>
-                  <th>Current State</th>
-                  <th>Input</th>
-                  <th>Next State</th>
+                <th scope="col">Current State</th>
+                <th scope="col">Input</th>
+                <th scope="col">Next State</th>
                 </tr>
-              </thead>
-              <tbody>${rows}</tbody>
+            </thead>
+            <tbody>
+                ${transition_state.join("")}
+            </tbody>
             </table>
-            <div class="d-flex align-items-center">
-              <p class="fw-bold mb-0 p-2">Status</p>
-              <span class="badge text-bg-danger">Rejected</span>
-            </div>`);
+            <div class = "d-flex align-items-center">
+            <p class="fw-bold mb-0 p-2">Status</p>
+            <span class="badge text-bg-danger">rejected</span>
+            </div>`;
+          $(".transition_table").html(transition_table);
         } else {
-          const entries = Object.entries(json);
-          const lastNextState = entries[entries.length - 1][1].next_state;
-          const isAccepted = accept.includes(lastNextState);
+            let table;
+            console.log(json)
+            let length = Object.entries(json).length
+            if (
+              accept.includes(Object.entries(json)[length - 1][1].next_state)
+            ) {
+              table = `<div class = "d-flex align-items-center">
+                <p class="fw-bold mb-0 p-2">Status</p>
+                <span class="badge text-bg-success">Accepted</span>
+                </div>`;
+            } else {
+              table = `<div class = "d-flex align-items-center">
+                <p class="fw-bold mb-0 p-2">Status</p>
+                <span class="badge text-bg-danger">Rejected</span>
+                </div>`;
+            }
+            let next_transition = Object.entries(json).map(
+                ([state, next]) => `<tr>
+                    <td>${state}</td>
+                    <td>${next.char}</td>
+                    <td>${next.next_state}</td>
+                </tr>`);
+                let transition_table = `<table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">current state</th>
+                            <th scope="col">input</th>
+                            <th scope="col">next state</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${next_transition.join("")}
 
-          let rows = entries.map(([state, next]) => `
-            <tr>
-              <td>${state}</td>
-              <td>${next.char}</td>
-              <td>${next.next_state}</td>
-            </tr>`).join("");
-
-          const badge = isAccepted
-            ? `<span class="badge text-bg-success">Accepted</span>`
-            : `<span class="badge text-bg-danger">Rejected</span>`;
-
-          $(".transition_table").html(`
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th>Current State</th>
-                  <th>Input</th>
-                  <th>Next State</th>
-                </tr>
-              </thead>
-              <tbody>${rows}</tbody>
-            </table>
-            <div class="d-flex align-items-center">
-              <p class="fw-bold mb-0 p-2">Status</p>
-              ${badge}
-            </div>`);
-        }
+                    </tbody>
+                </table>
+                ${table}`;
+                $('.transition_table').html(transition_table)
+            }
       },
     });
   });

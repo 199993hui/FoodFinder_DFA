@@ -1,7 +1,5 @@
 # FoodFinder DFA
 
-🌐 **[Live Demo](https://foodfinder-dfa.onrender.com)**
-
 A DFA (Deterministic Finite Automaton) based food name detection web app. Paste any text and it will identify food names, highlight them inline, show their positions, and visualise the DFA state transitions for each token.
 
 ## 🍰 Detection Capabilities
